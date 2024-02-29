@@ -13,5 +13,13 @@
     },
     "autoload": {
         "psr-4": { "": ["application/core/", "application/model/"] }
+    },
+    "scripts": {
+        "php-version": "php --version"
+    },
+"config": {
+    "platform": {
+       "php": "8.2.12"
     }
+}
 }
