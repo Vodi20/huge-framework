@@ -14,8 +14,10 @@ class NoteModel
     {
         $database = DatabaseFactory::getFactory()->getConnection();
 
+
         $sql = "SELECT user_id, note_id, note_text FROM notes WHERE user_id = :user_id";
         $query = $database->prepare($sql);
+
         $query->execute(array(':user_id' => Session::get('user_id')));
 
         // fetchAll() is the PDO method that gets all result rows

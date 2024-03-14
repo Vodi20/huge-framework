@@ -18,6 +18,7 @@ class ProfileController extends Controller
     {
         $this->View->render('profile/index', array(
             'users' => UserModel::getPublicProfilesOfAllUsers())
+
         );
     }
 

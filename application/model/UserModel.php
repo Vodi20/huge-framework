@@ -17,9 +17,9 @@ class UserModel
      */
     public static function getPublicProfilesOfAllUsers()
     {
-        $database = DatabaseFactory::getFactory()->getConnection();
+        $database = DatabaseFacto::getFactory()->getConnection();
 
-        $sql = "SELECT user_id, user_name, user_email, user_active, user_has_avatar, user_deleted FROM users";
+        $sql = "SELECT user_id, user_name, user_email, user_account_type, user_active, user_has_avatar, user_deleted FROM users";
         $query = $database->prepare($sql);
         $query->execute();
 
@@ -31,11 +31,12 @@ class UserModel
             // application/core/Filter.php for more info on how to use. Removes (possibly bad) JavaScript etc from
             // the user's values
             array_walk_recursive($user, 'Filter::XSSFilter');
-
+            
             $all_users_profiles[$user->user_id] = new stdClass();
             $all_users_profiles[$user->user_id]->user_id = $user->user_id;
             $all_users_profiles[$user->user_id]->user_name = $user->user_name;
             $all_users_profiles[$user->user_id]->user_email = $user->user_email;
+            $all_users_profiles[$user->user_id]->user_account_type = $user->user_account_type;
             $all_users_profiles[$user->user_id]->user_active = $user->user_active;
             $all_users_profiles[$user->user_id]->user_deleted = $user->user_deleted;
             $all_users_profiles[$user->user_id]->user_avatar_link = (Config::get('USE_GRAVATAR') ? AvatarModel::getGravatarLinkByEmail($user->user_email) : AvatarModel::getPublicAvatarFilePathOfUser($user->user_has_avatar, $user->user_id));
@@ -340,4 +341,22 @@ class UserModel
         // return one row (we only have one result or nothing)
         return $query->fetch();
     }
-}
+    public static function getAccountType($types = null){
+
+        if(!$types){
+            return;
+        }
+    
+        $database = DatabaseFactory::getFactory()->getConnection();
+
+        $query = $database->prepare("SELECT 
+                                          types,  
+                                     FROM t_user_account_types
+                                     WHERE type = :types'");
+
+        $query->execute([':user_account_type' => $types]);
+
+        return $query->fetch()->lang;;
+    }
+};
+

@@ -11,17 +11,27 @@
             build things that use profile information of one or multiple/all users.
         </div>
         <div>
-            <table class="overview-table">
+            <script type="text/javascript">
+                $(document).ready(function() {
+                    $('#example').DataTable( {
+                        order: false
+                    } );
+            });
+            </script>
+            
+            <table id="example" class="display" style="width:100%">
                 <thead>
                 <tr>
                     <td>Id</td>
                     <td>Avatar</td>
                     <td>Username</td>
                     <td>User's email</td>
+                    <td>user_account_type</td>
                     <td>Activated ?</td>
                     <td>Link to user's profile</td>
                 </tr>
                 </thead>
+                <tbody>
                 <?php foreach ($this->users as $user) { ?>
                     <tr class="<?= ($user->user_active == 0 ? 'inactive' : 'active'); ?>">
                         <td><?= $user->user_id; ?></td>
@@ -32,12 +42,15 @@
                         </td>
                         <td><?= $user->user_name; ?></td>
                         <td><?= $user->user_email; ?></td>
+                        <td><?= UserModel::getAccountType($user->user_account_type); ?></td>
                         <td><?= ($user->user_active == 0 ? 'No' : 'Yes'); ?></td>
                         <td>
                             <a href="<?= Config::get('URL') . 'profile/showProfile/' . $user->user_id; ?>">Profile</a>
                         </td>
                     </tr>
                 <?php } ?>
+                <tbody>
+                
             </table>
         </div>
     </div>

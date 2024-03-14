@@ -8,6 +8,12 @@
     <link rel="icon" href="data:;base64,=">
     <!-- CSS -->
     <link rel="stylesheet" href="<?php echo Config::get('URL'); ?>css/style.css" />
+    <!-- JS -->
+    <!--<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"> </script>-->
+    <script src="https://code.jquery.com/jquery-3.7.1.js"> </script>
+    <script src="https://cdn.datatables.net/2.0.1/js/dataTables.js"> </script>
+    <link rel="stylesheet" href="https://cdn.datatables.net/2.0.1/css/dataTables.dataTables.css">
+    
 </head>
 <body>
     <!-- wrapper, to center website -->
@@ -24,6 +30,15 @@
             <li <?php if (View::checkForActiveController($filename, "profile")) { echo ' class="active" '; } ?> >
                 <a href="<?php echo Config::get('URL'); ?>profile/index">Profiles</a>
             </li>
+
+
+
+            <li <?php if (View::checkForActiveController($filename, "chat")) { echo ' class="active" '; } ?> >
+                <a href="<?php echo Config::get('URL'); ?>chat/index">Chats</a>
+            </li>
+
+
+
             <?php if (Session::userIsLoggedIn()) { ?>
                 <li <?php if (View::checkForActiveController($filename, "dashboard")) { echo ' class="active" '; } ?> >
                     <a href="<?php echo Config::get('URL'); ?>dashboard/index">Dashboard</a>

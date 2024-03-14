@@ -109,9 +109,12 @@ class Session
         if (isset($userId) && isset($session_id)) {
 
             $database = DatabaseFactory::getFactory()->getConnection();
+            
             $sql = "SELECT session_id FROM users WHERE user_id = :user_id LIMIT 1";
 
             $query = $database->prepare($sql);
+
+            //$query = mysqli_prepare($database, $sql);
             $query->execute(array(":user_id" => $userId));
 
             $result = $query->fetch();
