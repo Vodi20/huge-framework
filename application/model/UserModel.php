@@ -17,12 +17,12 @@ class UserModel
      */
     public static function getPublicProfilesOfAllUsers()
     {
-        $database = DatabaseFacto::getFactory()->getConnection();
+        $database = DatabaseFactory::getFactory()->getConnection();
 
         $sql = "SELECT user_id, user_name, user_email, user_account_type, user_active, user_has_avatar, user_deleted FROM users";
         $query = $database->prepare($sql);
         $query->execute();
-
+        
         $all_users_profiles = array();
 
         foreach ($query->fetchAll() as $user) {

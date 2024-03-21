@@ -21,12 +21,31 @@ class ChatController extends Controller
      */
     public function index()
     {
+        $userId = Session::get('user_id');
+
+    
+        $chatId = ChatModel::getChatIdFromSessionUser($userId);
+
+        $messages = ChatModel::getAllMessages($chatId);
+        
+        
+        
         $this->View->render('chat/index', array(
-            'messages' => NoteModel::getAllMessages()
+            'messages' => $messages         
         ));
     }
 
-    public function getMessagesFromChat(){
-        
+    public function sendMessage() {
+
+        $userId = Session::get('user_id');
+
+
+        $chatId = ChatModel::getChatIdFromSessionUser($userId);
+        $message = Request::post('message');
+        ChatModel::sendMessage(Session::get('user_id'), $message, $chatId);
+        Redirect::to('chat/index');
     }
+
+
+    
 }
